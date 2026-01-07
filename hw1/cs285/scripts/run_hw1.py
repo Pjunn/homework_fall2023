@@ -157,7 +157,8 @@ def run_training_loop(params):
           # HINT2: use np.random.permutation to sample random indices
           # HINT3: return corresponding data points from each array (i.e., not different indices from each array)
           # for imitation learning, we only need observations and actions.  
-          ob_batch, ac_batch = TODO
+          indices = np.random.permutation(params['train_batch_size'])
+          ob_batch, ac_batch = torch.tensor(replay_buffer.obs[indices], dtype=torch.float32, device=ptu.device, requires_grad=True), torch.tensor(replay_buffer.acs[indices], dtype=torch.float32, device=ptu.device, requires_grad=True)
 
           # use the sampled data to train an agent
           train_log = actor.update(ob_batch, ac_batch)
